@@ -6,9 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Redis;
 
 /**
- * Description of CacheRepository
- *
- * @author ankit
+ * @author Ankit Vishwakarma <er.ankitvishwakarma@gmail.com>
+ * @modified Jan 26, 2019
  */
 class CacheRepository extends ModelRepository
 {

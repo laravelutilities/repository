@@ -10,8 +10,11 @@ use Illuminate\Filesystem\Filesystem;
 /**
  * Description of RepositoryServiceProvider
  *
- * @author ankit
+ * 
+ * @author Ankit Vishwakarma <er.ankitvishwakarma@gmail.com>
+ * @modified Jan 26, 2019
  */
+ 
 class RepositoryServiceProvider extends ServiceProvider
 {
     protected $defer = true;

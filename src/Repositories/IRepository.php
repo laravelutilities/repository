@@ -3,8 +3,8 @@
 namespace LaravelUtility\Repository\Repositories;
 
 /**
- *
- * @author ankit
+ * @author Ankit Vishwakarma <er.ankitvishwakarma@gmail.com>
+ * @modified Jan 26, 2019
  */
 interface IRepository
 {

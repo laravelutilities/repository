@@ -3,10 +3,10 @@
 namespace LaravelUtility\Repository\Repositories;
 
 use Illuminate\Database\Eloquent\Model;
+
 /**
- * Description of ModelRepository
- *
- * @author ankit
+ * @author Ankit Vishwakarma <er.ankitvishwakarma@gmail.com>
+ * @modified Jan 26, 2019
  */
 class ModelRepository implements IRepository
 {
