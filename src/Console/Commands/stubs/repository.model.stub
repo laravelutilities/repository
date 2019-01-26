@@ -1,0 +1,14 @@
+<?php
+
+namespace DummyNamespace;
+
+use LaravelUtility\Repository\Repositories\ModelRepository;
+use App\Models\DummyModelClass;
+
+class DummyClass extends ModelRepository
+{
+    public function __construct(DummyModelClass $DummyModelVariable)
+    {
+        parent::__construct($DummyModelVariable);
+    }
+}

@@ -1,0 +1,14 @@
+<?php
+
+namespace DummyNamespace;
+
+use LaravelUtility\Repository\Repositories\CacheRepository;
+use App\Models\DummyModelClass;
+
+class DummyClass extends CacheRepository
+{
+    public function __construct(DummyModelClass $DummyModelVariable)
+    {
+        parent::__construct($DummyModelVariable);
+    }
+}
