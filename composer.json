@@ -1,0 +1,13 @@
+{
+    "name": "laravelutilities/repository",
+    "description": "Add-on on Laravel Models ",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Ankit Vishwakarma",
+            "email": "er.ankitvishwakarma@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}
