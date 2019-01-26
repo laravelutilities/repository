@@ -1,6 +1,6 @@
 {
     "name": "laravelutilities/repository",
-    "description": "Add-on on Laravel Models ",
+    "description": "Add-on on Laravel Models with caching implementation",
     "type": "library",
     "authors": [
         {
