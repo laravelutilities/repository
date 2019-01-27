@@ -13,7 +13,7 @@ class CacheRepository extends ModelRepository
     public function findByFieldFromCache($key, $value)
     {
         $cacheKey = $this->prefix . ':' . $key . ':' . $value;
-        return Cache::tags($this->prefix)->remember($cacheKey, config('repository.cache_ttle'), function() use ($key, $value){
+        return Cache::tags($this->prefix)->remember($cacheKey, config('repository.cache_ttl'), function() use ($key, $value){
             return $this->model->where($key, $value)->first();
         });
     }
