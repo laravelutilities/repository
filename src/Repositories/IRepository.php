@@ -8,9 +8,9 @@ namespace LaravelUtility\Repository\Repositories;
  */
 interface IRepository
 {
-    public function getOneByField($key, $value);
-    public function getOneByFields(array $fieldsAndValues);
+    public function findByField($key, $value);
+    public function findByFields(array $fieldsAndValues);
     
-    public function getManyByField($key, $value);
-    public function getManyByFields(array $fieldsAndValues);
+    public function fetchByField($key, $value);
+    public function fetchByFields(array $fieldsAndValues);
 }

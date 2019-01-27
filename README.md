@@ -30,16 +30,16 @@ You can change the options of your app from `config/repository.php` file
 
 ## Usage
 
-You can inject the dependency of a repository in any controller and use its functions like `$this->repository->getManyByCreatedAt('foo')` or if you want to use cache `$this->repository->getManyByCreatedAt('foo', 'cache')`
+You can inject the dependency of a repository in any controller and use its functions like `$this->repository->fetchByCreatedAt('foo')` or if you want to use cache `$this->repository->fetchByCreatedAt('foo', 'cache')`
 ### Variations 
 ```php
-$this->repository->getOneByFieldFromCache('created_at', 'somevalue'); // extending cache repository; fetch only single value
-$this->repository->getOneByFieldsFromCache(['created_at' => 'somevalue', 'city' => 'someanothervalue',...]); // fetch multiple values
-$this->repository->getOneByField('created_at', 'somevalue'); // extending model repository; fetch only single value
-$this->repository->getOneByField('created_at', 'somevalue'); // extending model repository; fetch only single value
+$this->repository->findByFieldFromCache('created_at', 'somevalue'); // extending cache repository; fetch only single value
+$this->repository->findByFieldsFromCache(['created_at' => 'somevalue', 'city' => 'someanothervalue',...]); // fetch multiple values
+$this->repository->findByField('created_at', 'somevalue'); // extending model repository; fetch only single value
+$this->repository->findByField('created_at', 'somevalue'); // extending model repository; fetch only single value
 
-public function getManyByFieldFromCache($key, $value);
-public function getManyByFieldsFromCache(array $fieldsAndValues);
+public function fetchByFieldFromCache($key, $value);
+public function fetchByFieldsFromCache(array $fieldsAndValues);
 
 public function getById($id);
 public function getByIds(array $ids)
@@ -51,32 +51,33 @@ public function getByIds(array $ids)
 ```php
 
 use App\Repositories\OrganizationRepository;
+use App\Models\Organization;
 
 protected $organization;
     
-public function __construct(OrganizationRepository $organization)
+public function __construct(Organization $organization)
 {
-    $this->organization = $organization;
+    $this->organization = new OrganizationRepository($organization);
 }
 ```
 ### Model Repository Methods
 
 ```php
-public function getOneByField($key, $value);
-public function getOneByFields(array $fieldsAndValues);
+public function findByField($key, $value);
+public function findByFields(array $fieldsAndValues);
 
-public function getManyByField($key, $value);
-public function getManyByFields(array $fieldsAndValues);
+public function fetchByField($key, $value);
+public function fetchByFields(array $fieldsAndValues);
 ```
 
 ### Cache Repository Methods
 
 ```php
-public function getOneByFieldFromCache($key, $value);
-public function getOneByFieldsFromCache(array $fieldsAndValues);
+public function findByFieldFromCache($key, $value);
+public function findByFieldsFromCache(array $fieldsAndValues);
 
-public function getManyByFieldFromCache($key, $value);
-public function getManyByFieldsFromCache(array $fieldsAndValues);
+public function fetchByFieldFromCache($key, $value);
+public function fetchByFieldsFromCache(array $fieldsAndValues);
 
 public function getById($id);
 public function getByIds(array $ids)
@@ -90,11 +91,11 @@ public function getByIds(array $ids)
 A Trait has been added to further augment these functions using magic method. In all the above mentioned functions, `Field` can be replaced in any of the model field. Suppose, you have a field `created_at` inside your table; this can be called in variaous ways given below
 
 ```php
-$this->repository->getOneByCreatedAt('somevalue'); // extending model repository; fetch only single value
+$this->repository->findByCreatedAt('somevalue'); // extending model repository; fetch only single value
 
-$this->repository->getOneByCreatedAt('somevalue','cache'); // extending cache repository; fetch only single value
+$this->repository->findByCreatedAt('somevalue','cache'); // extending cache repository; fetch only single value
 
-$this->repository->getManyByCreatedAt(['created_at' => 'somevalue', 'city' => 'someanothervalue',...]); // fetch multiple values
+$this->repository->fetchByCreatedAt(['created_at' => 'somevalue', 'city' => 'someanothervalue',...]); // fetch multiple values
 ```
 
 ### Make Repository Command

@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Cache;
  */
 class CacheRepository extends ModelRepository
 {
-    public function getOneByFieldFromCache($key, $value)
+    public function findByFieldFromCache($key, $value)
     {
         $cacheKey = $this->prefix . ':' . $key . ':' . $value;
         return Cache::tags($this->prefix)->remember($cacheKey, config('repository.cache_ttle'), function() use ($key, $value){
@@ -18,7 +18,7 @@ class CacheRepository extends ModelRepository
         });
     }
     
-    public function getManyByFieldFromCache($key, $value)
+    public function fetchByFieldFromCache($key, $value)
     {
         $cacheKey = str_plural($this->prefix) . ":" . $key . ":" . $value;
         return Cache::tags($this->prefix)->remember($cacheKey, config('repository.cache_ttl'), function() use ($key, $value){
@@ -28,7 +28,7 @@ class CacheRepository extends ModelRepository
         });
     }
     
-    public function getOneByFieldsFromCache(array $fieldsAndValues)
+    public function findByFieldsFromCache(array $fieldsAndValues)
     {
         $cacheKey = $this->prefix . ":" . md5(print_r($fieldsAndValues, true));
         return Cache::tags($this->prefix)->remember($cacheKey, config('repository.cache_ttl'), function() use ($fieldsAndValues){
@@ -36,7 +36,7 @@ class CacheRepository extends ModelRepository
         });
     }
     
-    public function getManyByFieldsFromCache(array $fieldsAndValues)
+    public function fetchByFieldsFromCache(array $fieldsAndValues)
     {
         $cacheKey = str_plural($this->prefix) . ":" . md5(print_r($fieldsAndValues, true));
         return Cache::tags($this->prefix)->remember($cacheKey, config('repository.cache_ttl'), function() use ($fieldsAndValues){
@@ -48,14 +48,14 @@ class CacheRepository extends ModelRepository
 
     public function getById($id)
     {
-        return $this->getOneByFieldFromCache('id', $id);
+        return $this->findByFieldFromCache('id', $id);
     }
 
     public function getByIds(array $ids)
     {
         $results = [];
         foreach ($ids as $id) {
-            $results[$id] = $this->getOneByFieldFromCache('id', $id);
+            $results[$id] = $this->findByFieldFromCache('id', $id);
         }
         return $results;
     }

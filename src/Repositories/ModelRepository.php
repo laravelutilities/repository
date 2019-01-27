@@ -23,22 +23,22 @@ class ModelRepository implements IRepository
     }
     
     
-    public function getOneByField($key, $value)
+    public function findByField($key, $value)
     {
         return $this->model->where($key, $value)->first();
     }
 
-    public function getManyByField($key, $value)
+    public function fetchByField($key, $value)
     {
         return $this->model->where($key, $value)->get();
     }
 
-    public function getOneByFields(array $fieldsAndValues)
+    public function findByFields(array $fieldsAndValues)
     {
         return $this->model->where($fieldsAndValues)->first();
     }
 
-    public function getManyByFields(array $fieldsAndValues)
+    public function fetchByFields(array $fieldsAndValues)
     {
         return $this->model->where($fieldsAndValues)->get();
     }
