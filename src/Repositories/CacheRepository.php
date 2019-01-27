@@ -14,7 +14,7 @@ class CacheRepository extends ModelRepository
     {
         $cacheKey = $this->prefix . ':' . $key . ':' . $value;
         return Cache::tags($this->prefix)->remember($cacheKey, config('repository.cache_ttle'), function() use ($key, $value){
-            return Organization::where($key, $value)->first();
+            return $this->model->where($key, $value)->first();
         });
     }
     

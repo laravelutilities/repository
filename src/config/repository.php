@@ -9,6 +9,6 @@ return [
     /**
      * Cache TTL in minutes
      */
-   'cache_ttl' => env('REPOSITORY_CACHE_TTLE', 60)
+   'cache_ttl' => env('REPOSITORY_CACHE_TTL', 60)
 ];
 
