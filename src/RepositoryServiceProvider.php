@@ -30,7 +30,6 @@ class RepositoryServiceProvider extends ServiceProvider
     public function register()
     {
         $path = file_exists(config_path('repository.php')) ? config_path('repository.php') : __DIR__.'/config/repository.php';
-        
         $this->app->singleton('command.repository', function () {
             return new RepositoryMakeCommand(new Filesystem);
         });
@@ -40,7 +39,6 @@ class RepositoryServiceProvider extends ServiceProvider
                 $this->app['config']->get('database'),
                 require $path));
         
-        dd($this->app['config']->get('database'));
     }
     
      /**
@@ -50,6 +48,6 @@ class RepositoryServiceProvider extends ServiceProvider
      */
     public function provides()
     {
-        return ['command.repository', 'config.repository'];
+        return ['command.repository'];
     }
 }
