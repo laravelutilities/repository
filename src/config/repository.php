@@ -1,13 +1,14 @@
 <?php
 
 return [
-    'redis' => [
-        'repository' => [
-            'host'     => env('REDIS_HOST', '127.0.0.1'),
-            'password' => env('REDIS_PASSWORD', null),
-            'port'     => env('REDIS_PORT', 6379),
-            'database' => env('REDIS_REPOSITORY_DB', 5),
-        ]
-    ]
+   /**
+    * Redis connection to be used
+    */
+    'use' => 'cache',
+    
+    /**
+     * Cache TTL in minutes
+     */
+   'cache_ttl' => env('REPOSITORY_CACHE_TTLE', 60)
 ];
 

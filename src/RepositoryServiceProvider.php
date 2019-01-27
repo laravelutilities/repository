@@ -29,16 +29,12 @@ class RepositoryServiceProvider extends ServiceProvider
     
     public function register()
     {
-        $path = file_exists(config_path('repository.php')) ? config_path('repository.php') : __DIR__.'/config/repository.php';
         $this->app->singleton('command.repository', function () {
             return new RepositoryMakeCommand(new Filesystem);
         });
-
         $this->commands(['command.repository']);
-        $this->app['config']->set('database', array_merge_recursive(
-                $this->app['config']->get('database'),
-                require $path));
-        
+
+        $this->mergeConfigFrom(__DIR__.'/config/repository.php', 'repository');
     }
     
      /**
