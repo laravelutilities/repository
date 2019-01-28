@@ -15,10 +15,25 @@ trait Accessor
         if(isset($matches[2]))
         {
             $key = snake_case($matches[2]);
-            $function = $matches[1] . 'ByField' . ((isset($arguments[1]) and $arguments[1] == 'cache')  ? 'FromCache' : null);
+            
+            $function = $matches[1] . 'ByField' . $this->suffix($arguments);
             return $this->$function($key, $arguments[0]);
         }
             
+    }
+    
+    private function suffix($arguments)
+    {
+        $suffix = null;
+        if(isset($arguments[1]))
+        {
+            if(in_array($arguments[1], ['cache', true])
+                    and ($this instanceof CacheRepository))
+            {
+                $suffix = 'FromCache';
+            }
+        }
+        return $suffix;
     }
     
 }
