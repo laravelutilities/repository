@@ -3,6 +3,7 @@
 namespace LaravelUtility\Repository\Repositories;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 /**
  * @author Ankit Vishwakarma <er.ankitvishwakarma@gmail.com>
@@ -19,7 +20,7 @@ class ModelRepository implements IRepository
     public function __construct(Model $model)
     {
         $this->model  = $model;
-        $this->prefix = str_singular($this->model->getTable());
+        $this->prefix = Str::singular($this->model->getTable());
     }
 
 

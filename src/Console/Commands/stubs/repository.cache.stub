@@ -7,8 +7,8 @@ use App\Models\DummyModelClass;
 
 class DummyClass extends CacheRepository
 {
-    public function __construct(DummyModelClass $DummyModelVariable)
+    public function __construct()
     {
-        parent::__construct($DummyModelVariable);
+        parent::__construct(new DummyModelClass());
     }
 }

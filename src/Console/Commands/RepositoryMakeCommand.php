@@ -4,6 +4,7 @@ namespace LaravelUtility\Repository\Console\Commands;
 
 use Illuminate\Console\GeneratorCommand;
 use Illuminate\Support\Str;
+
 /**
  * @author Ankit Vishwakarma <er.ankitvishwakarma@gmail.com>
  * @modified Jan 26, 2019
@@ -16,8 +17,8 @@ class RepositoryMakeCommand extends GeneratorCommand
      * @var string
      */
     protected $signature = 'make:repository {name : The name of the repository}'
-            . '{--model= : The model to be assoicated}'
-            . '{--cache=true : Repository use cache}';
+        . '{--model= : The model to be assoicated}'
+        . '{--cache=true : Repository use cache}';
 
     /**
      * The console command description.
@@ -25,8 +26,8 @@ class RepositoryMakeCommand extends GeneratorCommand
      * @var string
      */
     protected $description = 'Create new repository command';
-    
-     /**
+
+    /**
      * The type of class being generated.
      *
      * @var string
@@ -43,7 +44,7 @@ class RepositoryMakeCommand extends GeneratorCommand
         $type = $this->option('cache') == 'true' ? 'cache' : 'model';
         $stub = "/stubs/repository.$type.stub";
 
-        return __DIR__.$stub;
+        return __DIR__ . $stub;
     }
 
     /**
@@ -55,21 +56,21 @@ class RepositoryMakeCommand extends GeneratorCommand
     protected function qualifyClass($name)
     {
         $name = ltrim($name, '\\/');
-    
+
         $rootNamespace = $this->rootNamespace();
-    
+
         if (Str::startsWith($name, $rootNamespace)) {
             return $name;
         }
-    
+
         $name = str_replace('/', '\\', $name);
-        $name = Str::endsWith($name, 'Repository') ? $name : $name.'Repository'; 
-    
+        $name = Str::endsWith($name, 'Repository') ? $name : $name . 'Repository';
+
         return $this->qualifyClass(
-            $this->getDefaultNamespace(trim($rootNamespace, '\\')).'\\'.$name
+            $this->getDefaultNamespace(trim($rootNamespace, '\\')) . '\\' . $name
         );
     }
-    
+
     /**
      * Get the default namespace for the class.
      *
@@ -78,10 +79,10 @@ class RepositoryMakeCommand extends GeneratorCommand
      */
     protected function getDefaultNamespace($rootNamespace)
     {
-        return $rootNamespace.'\Repositories';
+        return $rootNamespace . '\Repositories';
     }
 
-     /**
+    /**
      * Build the class with the given name.
      *
      * Remove the base controller import if we are already in base namespace.
@@ -93,15 +94,16 @@ class RepositoryMakeCommand extends GeneratorCommand
     {
         $replace = [];
         $model = $this->option('model');
-        if(empty($model))
-        {
+        if (empty($model)) {
             $model = str_replace('Repository', '', $this->argument('name'));
         }
-        
+
         $replace = $this->buildModelReplacements($replace, $model);
 
         return str_replace(
-            array_keys($replace), array_values($replace), parent::buildClass($name)
+            array_keys($replace),
+            array_values($replace),
+            parent::buildClass($name)
         );
     }
     /**
@@ -113,19 +115,19 @@ class RepositoryMakeCommand extends GeneratorCommand
     protected function buildModelReplacements(array $replace, $model)
     {
         $modelClass = $this->parseModel($model);
-        if (! class_exists($modelClass)) {
+        if (!class_exists($modelClass)) {
             if ($this->confirm("A {$modelClass} model does not exist. Do you want to generate it?", true)) {
                 $this->call('make:model', ['name' => $modelClass]);
             }
         }
-        
+
         return array_merge($replace, [
             'DummyFullModelClass' => $modelClass,
             'DummyModelClass' => class_basename($modelClass),
             'DummyModelVariable' => lcfirst(class_basename($modelClass)),
         ]);
     }
-    
+
     /**
      * Get the fully-qualified model class name.
      *
@@ -141,8 +143,8 @@ class RepositoryMakeCommand extends GeneratorCommand
         }
 
         $model = trim(str_replace('/', '\\', $model), '\\');
-        if (! Str::startsWith($model, $rootNamespace = $this->laravel->getNamespace() . 'Models\\')) {
-            $model = $rootNamespace.$model;
+        if (!Str::startsWith($model, $rootNamespace = $this->laravel->getNamespace() . 'Models\\')) {
+            $model = $rootNamespace . $model;
         }
 
         return $model;
