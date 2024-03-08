@@ -55,20 +55,21 @@ class RepositoryMakeCommand extends GeneratorCommand
     protected function qualifyClass($name)
     {
         $name = ltrim($name, '\\/');
-
+    
         $rootNamespace = $this->rootNamespace();
-
+    
         if (Str::startsWith($name, $rootNamespace)) {
             return $name;
         }
-
+    
         $name = str_replace('/', '\\', $name);
-        $name = ends_with($name, 'Repository') ? $name : $name.'Repository'; 
-
+        $name = Str::endsWith($name, 'Repository') ? $name : $name.'Repository'; 
+    
         return $this->qualifyClass(
             $this->getDefaultNamespace(trim($rootNamespace, '\\')).'\\'.$name
         );
     }
+    
     /**
      * Get the default namespace for the class.
      *
