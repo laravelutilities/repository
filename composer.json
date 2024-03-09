@@ -1,6 +1,7 @@
 {
     "name": "laravelutilities/repository",
     "description": "Add-on on Laravel Models with caching implementation",
+    "license": "MIT",
     "type": "library",
     "authors": [
         {
