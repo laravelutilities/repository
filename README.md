@@ -99,25 +99,6 @@ class AppLogRepository extends CacheRepository
 
 ```
 
-### Repository Class with Caching
-
-```php
-
-namespace App\Repositories;
-
-use App\Models\AppLog;
-use LaravelUtility\Repository\Repositories\ModelRepository;
-
-class AppLogRepository extends ModelRepository
-{
-    public function __construct()
-    {
-        parent::__construct(new AppLog());
-    }
-}
-
-```
-
 ### Model Repository Methods
 
 ```php
