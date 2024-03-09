@@ -51,15 +51,73 @@ public function getByIds(array $ids)
 ```php
 
 use App\Repositories\OrganizationRepository;
-use App\Models\Organization;
 
 protected $organization;
     
-public function __construct(Organization $organization)
+public function __construct()
 {
-    $this->organization = new OrganizationRepository($organization);
+    $this->organization = new OrganizationRepository();
 }
 ```
+
+### Repository Class with Database
+
+```php
+
+namespace App\Repositories;
+
+use App\Models\AppLog;
+use LaravelUtility\Repository\Repositories\ModelRepository;
+
+class AppLogRepository extends ModelRepository
+{
+    public function __construct()
+    {
+        parent::__construct(new AppLog());
+    }
+}
+
+```
+
+
+### Repository Class with Cache
+
+```php
+
+namespace App\Repositories;
+
+use App\Models\AppLog;
+use LaravelUtility\Repository\Repositories\CacheRepository;
+
+class AppLogRepository extends CacheRepository
+{
+    public function __construct()
+    {
+        parent::__construct(new AppLog());
+    }
+}
+
+```
+
+### Repository Class with Caching
+
+```php
+
+namespace App\Repositories;
+
+use App\Models\AppLog;
+use LaravelUtility\Repository\Repositories\ModelRepository;
+
+class AppLogRepository extends ModelRepository
+{
+    public function __construct()
+    {
+        parent::__construct(new AppLog());
+    }
+}
+
+```
+
 ### Model Repository Methods
 
 ```php
