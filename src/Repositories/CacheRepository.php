@@ -3,6 +3,7 @@
 namespace LaravelUtility\Repository\Repositories;
 
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Str;
 
 /**
  * @author Ankit Vishwakarma <er.ankitvishwakarma@gmail.com>
@@ -20,7 +21,7 @@ class CacheRepository extends ModelRepository
     
     public function fetchByFieldFromCache($key, $value)
     {
-        $cacheKey = str_plural($this->prefix) . ":" . $key . ":" . $value;
+        $cacheKey = Str::plural($this->prefix) . ":" . $key . ":" . $value;
         return Cache::tags($this->prefix)->remember($cacheKey, config('repository.cache_ttl'), function() use ($key, $value){
             return $this->model->where($key, $value)->get()->pluck('id');
         })->map(function($id){
@@ -38,7 +39,7 @@ class CacheRepository extends ModelRepository
     
     public function fetchByFieldsFromCache(array $fieldsAndValues)
     {
-        $cacheKey = str_plural($this->prefix) . ":" . md5(print_r($fieldsAndValues, true));
+        $cacheKey = Str::plural($this->prefix) . ":" . md5(print_r($fieldsAndValues, true));
         return Cache::tags($this->prefix)->remember($cacheKey, config('repository.cache_ttl'), function() use ($fieldsAndValues){
             return $this->model->where($fieldsAndValues)->get()->pluck('id');
         })->map(function($id){
