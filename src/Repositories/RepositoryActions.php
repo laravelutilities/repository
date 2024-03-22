@@ -1,6 +1,9 @@
 <?php
 
 namespace LaravelUtility\Repository\Repositories;
+
+use Illuminate\Support\Facades\DB;
+
 /**
  * @author Ankit Vishwakarma <er.ankitvishwakarma@gmail.com>
  * @modified Feb 24, 2020
@@ -21,10 +24,10 @@ trait RepositoryActions
      * @param array $insertData
      *
      * @return object
-    */
+     */
     public function insert($insertData)
     {
-        return $this->model->insert( $insertData );
+        return $this->model->insert($insertData);
     }
 
     /**
@@ -57,7 +60,48 @@ trait RepositoryActions
 
     public function create($insertData)
     {
-        return $this->model->create( $insertData );
+        return $this->model->create($insertData);
     }
 
+    public function insertOrUpdate($data)
+    {
+        $tableName = $this->model->getTable();
+        if (empty($data)) {
+            return false;
+        }
+
+        $columns = implode(", ", array_keys($data[0]));
+        $updateColumns = array_map(function ($column) {
+            return "{$column} = VALUES({$column})";
+        }, array_keys($data[0]));
+        $updateColumns = implode(", ", $updateColumns);
+
+        $values = [];
+        foreach ($data as $row) {
+            $values[] = "('" . implode("', '", array_map(function ($r) {
+                return addslashes($r);
+            }, array_values($row))) . "')";
+        }
+        $values = implode(", ", $values);
+
+        $query = "INSERT INTO {$tableName} ({$columns}) VALUES {$values} ON DUPLICATE KEY UPDATE {$updateColumns}";
+
+        // Execute the query here (e.g., using PDO)
+
+        return DB::statement($query);
+        return $query;
+    }
+
+    public function truncate($foreignKeyChecks = false)
+    {
+        if($foreignKeyChecks)
+        {
+            DB::statement('SET FOREIGN_KEY_CHECKS=0');
+        }
+        $this->model->truncate();
+        if($foreignKeyChecks)
+        {
+            DB::statement('SET FOREIGN_KEY_CHECKS=1');
+        }
+    }
 }
